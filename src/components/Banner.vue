@@ -36,25 +36,25 @@
             <div class="bet-size-choice">
 
                 <q-btn class="style-button"
-                       @click="rate1000"
-                       :class="{ 'choice-size' : size === 1000 }"> 1000 &#36;
+                       @click="selectedRateTHS"
+                       :class="{ 'choice-size' :  SelectionRateValues === 1000 }"> 1000 &#36;
                 </q-btn>
 
                 <q-btn class="style-button"
-                       @click="rate5000"
-                       :class="{ 'choice-size' : size === 5000  }"> 5000 &#36;
+                       @click="selectedRateFiveTHS"
+                       :class="{ 'choice-size' :  SelectionRateValues === 5000  }"> 5000 &#36;
                 </q-btn>
 
                 <q-btn class="style-button"
-                       @click="rate10000"
-                       :class="{ 'choice-size' : size === 10000  }"> 10000 &#36;
+                       @click="selectedRateTenTHS"
+                       :class="{ 'choice-size' :  SelectionRateValues === 10000  }"> 10000 &#36;
                 </q-btn>
 
             </div>
             <div class="size-bet">
-                <span>Сумма ставки </span>
+                <span> Сумма ставки </span>
                 <q-input color=white bg-color=#ff6fff
-                         filled v-model="size">
+                         filled v-model="rateValues">
                     <template v-slot:append>
                         <q-icon name="attach_money" color="white"/>
                     </template>
@@ -81,14 +81,20 @@
                 rateOne: 2.15,
                 rateTwo: 1.34,
                 bet: 0,
-                size: 0,
+                highlightSelection: 0,
+                rateValues: 0,
                 typeBet: 'Победитель карты',
                 isChoiceTeam: null
             }
         },
         computed: {
+
             calculationAmountWin() {
-                return Math.round(this.bet * this.size);
+                return Math.round(this.bet * this.rateValues);
+            },
+
+            SelectionRateValues() {
+                return this.highlightSelection = this.rateValues;
             }
         },
         methods: {
@@ -103,18 +109,18 @@
                 this.isChoiceTeam = false;
             },
 
-            rate1000() {
-                this.size = 1000;
+            selectedRateTHS() {
+                this.rateValues = 1000;
                 console.log('1000');
             },
 
-            rate5000() {
-                this.size = 5000;
+            selectedRateFiveTHS() {
+                this.rateValues = 5000;
                 console.log('5000');
             },
 
-            rate10000() {
-                this.size = 10000;
+            selectedRateTenTHS() {
+                this.rateValues = 10000;
                 console.log('10000');
             }
         }
@@ -122,7 +128,10 @@
 </script>
 
 <style scoped>
-    h1, h2, h3, h4, h5, h6 {
+
+
+
+    h1, h2, h3, h4, h5, h6, span {
         margin: 0;
     }
 
@@ -144,20 +153,25 @@
 
     .bet-logo {
         grid-area: logo;
-        margin: auto;
+        margin: 10px;
+
     }
 
     .img-bet-logo {
         max-width: 100%;
         min-width: 350px;
+        padding: 15px;
     }
 
     .field-live {
         grid-area: livefield;
         display: grid;
         width: 350px;
-        height: auto;
         border: 2px solid #ff2b2b;
+        padding: 5px;
+        margin-top: 10px;
+        margin-left: auto;
+        margin-right: auto;
     }
 
     .team-name {
@@ -227,8 +241,11 @@
     }
 
     .size-bet {
-        margin: auto;
-        color: white;
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        grid-template-rows: 1fr;
+        color: #ffffff;
+        font-size: 18pt;
     }
 
     .bet-size-choice {
